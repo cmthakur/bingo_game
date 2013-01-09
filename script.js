@@ -1,6 +1,7 @@
 // http://refresh-sf.com/yui
 var emptySquare = 12;
 var totalSquare = 27;
+var cardCount = 0
 window.onload = initializePage;
 
 var usedNumbers = new Array(90);
@@ -8,12 +9,10 @@ var usedNumbers = new Array(90);
 function initializePage() {
     // so older browsers do not get 24 error messages
     if (document.getElementById) {
-       var card = document.getElementById("card");
-       card.style.display = "none";
-       document.getElementById("reload").onclick = anotherCard();
         // enable creating a new card without reloading page
+         document.getElementById("reload").onclick = anotherCard;
         // generate the new bingo card
-        // newCard();
+        newCard();
     } else {
         alert("Please enable javascript on your browsers.");
     }
@@ -113,47 +112,46 @@ function getNewNumber() {
     }
 
 function anotherCard() {
-    console.log("hello")
-    var number = 0 //parseInt(document.getElementById("number_of_cards").value);
-    console.log(number);
-
-    do{
-
     // housekeeping: reset the usedNumbers flag arrays to all false
     for (var i = 1; i < usedNumbers.length; i++) {
         usedNumbers[i] = false;
     }
 
-    console.log(number);
-    var div = document.createElement('div'+number);
+    var div = document.createElement('div');
     var body = document.getElementsByTagName('body') [0];
     var cardHTML = document.getElementById("card").innerHTML;
+
     var table = document.getElementById("table");
 
     div.innerHTML = cardHTML;
 
 
-    changeSquareId(number);
+    changeSquareId();
 
     var _card = document.getElementById("card")
 
     document.body.insertBefore(div, _card);
 
+    // document.body.appendChild(table);
+
+    // generate the new bingo card
     newCard();
     return false;
-
-    }while(number > 0)
  }
 
 
 
- function changeSquareId(nextId){
+ function changeSquareId(){
+    console.log(cardCount);
     for(var i=0; i < totalSquare; i++){
         var square = document.getElementById("square"+i);
-        square.id = nextId+"square"+i;
+        console.log(square.id);
+        square.id =  ""+cardCount+"square"+i;
+        console.log(square.id);
     }
     table = document.getElementById("table")
-    table.id = "table"+nextId
+    table.id = "table"+cardCount
+    cardCount = cardCount + 1;
  }
 
 
