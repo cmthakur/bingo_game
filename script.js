@@ -1,15 +1,16 @@
 // http://refresh-sf.com/yui
 
 ////////////////////copyright @ chandra mohan thakur //////////////
-var emptySquare = 12;
-var totalSquare = 27;
-var cardCount = 0;
-var usedNumbers = new Array(90);
+var emptySquare = 12;  //Number of empty square to be made
+var totalSquare = 27;  //Total numbers of square in the card
+var cardCount = 0;     //Initilize card count and increases when a new card is created
+var usedNumbers = new Array(90); //Array of used numbers
 
 ///////////////////////////////////////////////////////////////////
 window.onload = initializePage;
 
 ///////////////////////////////////////////////////////////////////
+/// Initilize the page ///
 function initializePage() {
     // so older browsers do not get 24 error messages
     if (document.getElementById) {
@@ -23,21 +24,24 @@ function initializePage() {
 }
 
 ///////////////////////////////////////////////////////////////////
+/// Create new card ///
 function newCard() {
+    //Loop that sets the value of the square
     for (var i = 0; i < 27; i++) {
         // pass the current i as parameter to setSquare function
         setSquare(i)
     }
 
+    // Variables saying which row consist of which numbers
     var emptyIndexArray = new Array
     var rowOne = new Array(0,1,2,3,4,5,6,7,8);
     var rowTwo = new Array(9,10,11,12,13,14,15,16,17);
     var rowThree = new Array(18,19,20,21,22,23,24,25,26);
-
+    // Variables that are need to store square which should be made empty
     var emptyRowOne =  new Array
     var emptyRowTwo =  new Array
     var emptyRowThree =  new Array
-
+    //Loop thats stores the empty square in the card rows
     do{
         var emptyIndex = Math.floor(Math.random()*27);
         if(rowOne.contains(emptyIndex)){
