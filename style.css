@@ -30,8 +30,8 @@ th, td {
 }
 
 .square{
-height: 30px;
-width:  30px;
+    height: 30px;
+    width:  30px;
 }
 
 div{
@@ -45,4 +45,33 @@ div{
     margin-right: auto;
     float: left;
     margin-right:  50%;
+}
+
+.title{
+    height: 50px;
+    text-align: center;
+    margin-top: 2px;
+    font-size: 32;
+    font-weight: bold;
+    font-style: italic;
+    color: #056;
+}
+
+#reload {
+    height: 40px;
+    border-radius: 4px;
+}
+
+#number_of_cards{
+    height:34px;
+    border-radius: 4px;
+}
+
+footer{
+    display: inline;
+    margin-bottom: 0;
+    padding-right: 0.75em;
+    font-size: 13px;
+    position: fixed;
+    top:98%;
 }
