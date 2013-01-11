@@ -5,6 +5,7 @@ var emptySquare = 12;  //Number of empty square to be made
 var totalSquare = 27;  //Total numbers of square in the card
 var cardCount = 0;     //Initilize card count and increases when a new card is created
 var usedNumbers = new Array(90); //Array of used numbers
+var MAXCARDNUMBER = 10;
 
 ///////////////////////////////////////////////////////////////////
 window.onload = initializePage;
@@ -14,12 +15,28 @@ window.onload = initializePage;
 function initializePage() {
     // so older browsers do not get 24 error messages
     if (document.getElementById) {
+        var card = document.getElementById("card");
+        card.style.display = "none";
         // enable creating a new card without reloading page
-        document.getElementById("reload").onclick = anotherCard;
+        document.getElementById("reload").onclick = generareCards;
         // generate the new bingo card
-        newCard();
+        // newCard();
     } else {
         alert("Please enable javascript on your browsers.");
+    }
+}
+
+function generareCards(){
+    var cardNumber = parseInt(document.getElementById("number_of_cards").value);
+    if(cardNumber > MAXCARDNUMBER){
+        alert("You can not create cards more then 25 in one click!");
+        return false;
+    }else{
+        do{
+            anotherCard();
+            cardNumber = cardNumber - 1;
+        }while(cardNumber > 0)
+
     }
 }
 
@@ -67,7 +84,6 @@ function newCard() {
         document.getElementById("square"+emptyIndexArray.pop(1)).innerHTML = '';
     }while(emptyIndexArray.length > 0)
 }
-
 
 ///////////////////////////////////////////////////////////////////
 function getNewNumber() {
