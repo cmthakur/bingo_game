@@ -1,16 +1,20 @@
 // http://refresh-sf.com/yui
+
+////////////////////copyright @ chandra mohan thakur //////////////
 var emptySquare = 12;
 var totalSquare = 27;
-var cardCount = 0
-window.onload = initializePage;
-
+var cardCount = 0;
 var usedNumbers = new Array(90);
 
+///////////////////////////////////////////////////////////////////
+window.onload = initializePage;
+
+///////////////////////////////////////////////////////////////////
 function initializePage() {
     // so older browsers do not get 24 error messages
     if (document.getElementById) {
         // enable creating a new card without reloading page
-         document.getElementById("reload").onclick = anotherCard;
+        document.getElementById("reload").onclick = anotherCard;
         // generate the new bingo card
         newCard();
     } else {
@@ -18,10 +22,11 @@ function initializePage() {
     }
 }
 
+///////////////////////////////////////////////////////////////////
 function newCard() {
     for (var i = 0; i < 27; i++) {
         // pass the current i as parameter to setSquare function
-        setSquare(i);
+        setSquare(i)
     }
 
     var emptyIndexArray = new Array
@@ -33,44 +38,45 @@ function newCard() {
     var emptyRowTwo =  new Array
     var emptyRowThree =  new Array
 
- do{
-    var emptyIndex = Math.floor(Math.random()*27);
-    if(rowOne.contains(emptyIndex)){
-        if(unique(emptyRowOne).length <= 3){
-            emptyRowOne.push(emptyIndex);
+    do{
+        var emptyIndex = Math.floor(Math.random()*27);
+        if(rowOne.contains(emptyIndex)){
+            if(unique(emptyRowOne).length <= 3){
+                emptyRowOne.push(emptyIndex);
+                emptyIndexArray.push(emptyIndex);
+            }
+        }else if(rowTwo.contains(emptyIndex)){
+            if(unique(emptyRowTwo).length <=3){
+                emptyRowTwo.push(emptyIndex);
+                emptyIndexArray.push(emptyIndex);
+            }
+        }else if(rowThree.contains(emptyIndex)){
+           if(unique(emptyRowThree).length <= 3){
+            emptyRowThree.push(emptyIndex);
             emptyIndexArray.push(emptyIndex);
         }
-    }else if(rowTwo.contains(emptyIndex)){
-        if(unique(emptyRowTwo).length <=3){
-            emptyRowTwo.push(emptyIndex);
-            emptyIndexArray.push(emptyIndex);
-        }
-    }else if(rowThree.contains(emptyIndex)){
-       if(unique(emptyRowThree).length <= 3){
-        emptyRowThree.push(emptyIndex);
-        emptyIndexArray.push(emptyIndex);
       }
-    }
-   emptyIndexArray =  unique(emptyIndexArray);
- }while(emptyIndexArray.length < 12)
+      emptyIndexArray =  unique(emptyIndexArray);
+    }while(emptyIndexArray.length < 12)
 
-
-//  console.log("Empty Row Index");
-//  console.log(unique(emptyRowThree));
-//  console.log(unique(emptyRowTwo));
-//  console.log(unique(emptyRowOne));
-
- do{
-    document.getElementById("square"+emptyIndexArray.pop(1)).innerHTML = '';
- }while(emptyIndexArray.length > 0)
-
+    do{
+        document.getElementById("square"+emptyIndexArray.pop(1)).innerHTML = '';
+    }while(emptyIndexArray.length > 0)
 }
 
 
-function setSquare(index) {
-    // capture current corresponding html square (via id=)  to current digit that was passed over
-    var currentIndex = "square" + index;
+///////////////////////////////////////////////////////////////////
+function getNewNumber() {
+    // capture random number between 1 and 10 for bingo values
+    // math.random() returns random number between 0 and 1
+    // math.floor() returns floor of a decimal number (ex. 1.75 becomes 1)
+    return Math.floor(Math.random() * 10)
+}
 
+///////////////////////////////////////////////////////////////////
+function setSquare(index) {
+   // capture current corresponding html square (via id=)  to current digit that was passed over
+   var currentIndex = "square" + index;
     // 1st column =>  1 - 9
     // 2nd column =>  10 - 19
     // 3rd column =>  20 - 29
@@ -98,74 +104,53 @@ function setSquare(index) {
     if (!usedNumbers[newNumber]) {
         // if duplicate was not found, this must be an original #, so set this element to true
         usedNumbers[newNumber] = true;
-
         // assign randomized newNum to current square
         document.getElementById(currentIndex).innerHTML = newNumber;
     }
 }
 
-function getNewNumber() {
-    // capture random number between 1 and 10 for bingo values
-        // math.random() returns random number between 0 and 1
-        // math.floor() returns floor of a decimal number (ex. 1.75 becomes 1)
-        return Math.floor(Math.random() * 10)
-    }
-
+///////////////////////////////////////////////////////////////////
 function anotherCard() {
     // housekeeping: reset the usedNumbers flag arrays to all false
     for (var i = 1; i < usedNumbers.length; i++) {
         usedNumbers[i] = false;
     }
-
     var div = document.createElement('div');
     var body = document.getElementsByTagName('body') [0];
     var cardHTML = document.getElementById("card").innerHTML;
-
-    var table = document.getElementById("table");
-
-    div.innerHTML = cardHTML;
-
-
-    changeSquareId();
-
     var _card = document.getElementById("card")
-
+    div.innerHTML = cardHTML;
     document.body.insertBefore(div, _card);
-
-    // document.body.appendChild(table);
 
     // generate the new bingo card
     newCard();
+    // after creating new card change the square id
+    changeSquareId();
     return false;
- }
+}
 
-
-
- function changeSquareId(){
-    console.log(cardCount);
+///////////////////////////////////////////////////////////////////
+function changeSquareId(){
     for(var i=0; i < totalSquare; i++){
-        var square = document.getElementById("square"+i);
-        console.log(square.id);
-        square.id =  ""+cardCount+"square"+i;
-        console.log(square.id);
-    }
-    table = document.getElementById("table")
-    table.id = "table"+cardCount
-    cardCount = cardCount + 1;
- }
+       var square = document.getElementById("square"+i);
+       square.id =  "square"+i+"_"+cardCount;
+   }
+   cardCount = cardCount + 1;
+}
 
-
+///////////////////////////////////////////////////////////////////
 //  override array methods
 Array.prototype.contains = function(k) {
     for(var p in this)
         if(this[p] === k)
             return true;
-    return false;
+        return false;
 }
 
 function unique(array){
-   var unique=array.filter(function(itm,i,a){
-    return i==array.indexOf(itm);
- });
-   return unique;
+    var unique=array.filter(function(itm,i,a){
+        return i==array.indexOf(itm);
+    });
+    return unique;
 }
+////////////////////////////////////////////////////////////////////
