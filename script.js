@@ -29,7 +29,7 @@ function initializePage() {
 function generareCards(){
     var cardNumber = parseInt(document.getElementById("number_of_cards").value);
     if(cardNumber > MAXCARDNUMBER){
-        alert("You can not create cards more then 25 in one click!");
+        alert("You can not create cards more then " +MAXCARDNUMBER+ " in one click!");
         return false;
     }else{
         do{
