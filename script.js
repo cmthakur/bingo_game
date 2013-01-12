@@ -6,6 +6,7 @@ var totalSquare = 27;  //Total numbers of square in the card
 var cardCount = 0;     //Initilize card count and increases when a new card is created
 var usedNumbers = new Array(90); //Array of used numbers
 var MAXCARDNUMBER = 10;
+var emptyIndexArray = new Array
 
 ///////////////////////////////////////////////////////////////////
 window.onload = initializePage;
@@ -50,7 +51,7 @@ function newCard() {
     }
 
     // Variables saying which row consist of which numbers
-    var emptyIndexArray = new Array
+    // var emptyIndexArray = new Array
     var rowOne = new Array(0,1,2,3,4,5,6,7,8);
     var rowTwo = new Array(9,10,11,12,13,14,15,16,17);
     var rowThree = new Array(18,19,20,21,22,23,24,25,26);
@@ -79,6 +80,26 @@ function newCard() {
       }
       emptyIndexArray =  unique(emptyIndexArray);
     }while(emptyIndexArray.length < 12)
+
+    ///*************** prevent whole column to get blank **********///
+     var tipicalArray = new Array([0,9,18],[1,10,19],[2,11,20],[3,12,21],[4,13,22],[5,14,23],[6,15,24],[7,16,25],[8,17,16])
+     var checkThisIndexes = emptyIndexArray;
+     for(var i = 0; i < tipicalArray.length; i++){
+        var innerTipicalArray = tipicalArray[i];
+        var indexsToCount = new Array;
+        for(var j = 0; j < 3; j++){
+            if(checkThisIndexes.contains(innerTipicalArray[j])){
+                indexsToCount.push(innerTipicalArray[j]);
+            }
+        }
+
+        if(indexsToCount.length == 3){
+          var index = emptyIndexArray.indexOf(indexsToCount[Math.floor(Math.random() * 3)]);
+          emptyIndexArray.splice(index,1);
+        }
+     }
+    ///*******************************************************************///
+
 
     do{
         document.getElementById("square"+emptyIndexArray.pop(1)).innerHTML = '';
