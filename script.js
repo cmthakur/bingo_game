@@ -5,7 +5,7 @@ var emptySquare = 12;  //Number of empty square to be made
 var totalSquare = 27;  //Total numbers of square in the card
 var cardCount = 0;     //Initilize card count and increases when a new card is created
 var usedNumbers = new Array(90); //Array of used numbers
-var MAXCARDNUMBER = 10;
+var MAXCARDNUMBER = 1000;
 var emptyIndexArray = new Array
 
 ///////////////////////////////////////////////////////////////////
@@ -138,7 +138,7 @@ function setSquare(index) {
     // generate newNumber and check if it has been used already, if so loop again
     do {
         // add random number to the particular column multiple
-        newNumber = columnMultiple + getNewNumber()  + 1;
+        newNumber = columnMultiple + getNewNumber();
     } while(usedNumbers[newNumber]);
 
     // prevent duplicate numbers by testing if the newNumber has already been used once on this card
@@ -193,5 +193,9 @@ function unique(array){
         return i==array.indexOf(itm);
     });
     return unique;
+}
+
+function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
 }
 ////////////////////////////////////////////////////////////////////
