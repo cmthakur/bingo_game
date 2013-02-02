@@ -36,10 +36,22 @@ function generareCards(){
         do{
             anotherCard();
             cardNumber = cardNumber - 1;
+            // document.getElementById("number").innerHTML = cardNumber;
         }while(cardNumber > 0)
 
     }
+    nameTheCard();
 }
+
+// *******************************************************************//
+// ************** Name the card **************************************//
+function nameTheCard(){
+    var all_cards_trs = document.getElementsByClassName("card_name");
+    for(var i=0; i < all_cards_trs.length; i++){
+        all_cards_trs[i].innerHTML =  "<i> Bingo Card No."+ (i+1) +"</i>"
+    }
+}
+
 
 ///////////////////////////////////////////////////////////////////
 /// Create new card ///
@@ -82,22 +94,42 @@ function newCard() {
     }while(emptyIndexArray.length < 12)
 
     ///*************** prevent whole column to get blank **********///
-     var tipicalArray = new Array([0,9,18],[1,10,19],[2,11,20],[3,12,21],[4,13,22],[5,14,23],[6,15,24],[7,16,25],[8,17,16])
+     var tipicalArray = new Array([0,9,18],[1,10,19],[2,11,20],[3,12,21],[4,13,22],[5,14,23],[6,15,24],[7,16,25],[8,17,26])
      var checkThisIndexes = emptyIndexArray;
+     var sortedColumnValue = new Array();
      for(var i = 0; i < tipicalArray.length; i++){
         var innerTipicalArray = tipicalArray[i];
         var indexsToCount = new Array;
+        var columnValues = new Array;
         for(var j = 0; j < 3; j++){
             if(checkThisIndexes.contains(innerTipicalArray[j])){
                 indexsToCount.push(innerTipicalArray[j]);
             }
+          columnValues.push(parseInt(document.getElementById("square"+innerTipicalArray[j]).innerHTML))
         }
+
+        sortedColumnValue.push(columnValues.sort());
+        columnValues = [];
 
         if(indexsToCount.length == 3){
           var index = emptyIndexArray.indexOf(indexsToCount[Math.floor(Math.random() * 3)]);
-          emptyIndexArray.splice(index,1);
+          // emptyIndexArray.splice(index,1);
         }
      }
+
+    // *******************************************************************//
+    // ************** Sort the column values*******************************//
+
+    for(var i = 0; i < tipicalArray.length; i++){
+        var newSortedValue = sortedColumnValue[i];
+        var innerTipicalArray = tipicalArray[i];
+        for(var j = 0; j < 3; j++){
+            var columnValue = newSortedValue[j];
+            document.getElementById("square"+innerTipicalArray[j]).innerHTML = columnValue;
+        }
+        newSortedValue = [];
+    }
+
     ///*******************************************************************///
 
 
